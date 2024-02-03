@@ -1,8 +1,51 @@
+import { useState, useRef } from "react";
+import Icon from "@mdi/react";
+import { mdiPlus, mdiMinus, mdiSourceCommitStartNextLocal } from "@mdi/js";
 import storeData from "../storeData.js";
 
-const Card = ({ item }) => {
+const QtyButton = ({ path, title, onClick }) => {
   return (
-    <div className="aspect-2/3 sm:aspect-3/4 lg:aspect-4/5 flex w-40 flex-col rounded bg-zinc-900 p-4 shadow-md sm:w-48 lg:w-64">
+    <button
+      type="button"
+      className="flex h-6 w-6 items-center justify-center rounded bg-zinc-950"
+      title={title}
+      onClick={onClick}
+    >
+      <Icon path={path} size={0.9} />
+    </button>
+  );
+};
+
+const Card = ({ item }) => {
+  const [qty, setQty] = useState(0);
+  const [inputValue, setInputValue] = useState("0");
+
+  const handleChangeValue = (event) => {
+    const value = event.target.value;
+    setInputValue(value);
+    if (value !== "" && value >= 0 && value <= 99) {
+      setQty(+value);
+    } else {
+      setQty(0);
+    }
+  };
+
+  const changeQty = (newQty) => {
+    if (newQty < 0 || newQty > 99) {
+      setInputValue(qty.toString());
+      return;
+    }
+    setQty(newQty);
+    setInputValue(newQty.toString());
+  };
+
+  const buyItem = () => {
+    console.log(`buy ${qty} ${item.name}s`);
+    changeQty(0);
+  };
+
+  return (
+    <div className="aspect-2/3 sm:aspect-3/4 lg:aspect-4/5 flex w-40 flex-col rounded bg-zinc-900 p-2 shadow-md sm:w-48 lg:w-64 lg:p-4">
       <div>
         <img src={item.src} alt={item.name} className="mx-auto mb-2 w-3/4" />
         <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
@@ -10,7 +53,36 @@ const Card = ({ item }) => {
           {item.desc}
         </p>
       </div>
-      <div className="mt-auto">...</div>
+      <div className="mt-auto flex justify-between gap-2 text-sm lg:text-base">
+        <div className="flex items-center gap-1">
+          <QtyButton
+            path={mdiMinus}
+            title="Subtract quantity"
+            onClick={() => changeQty(qty - 1)}
+          />
+          <input
+            type="number"
+            className="w-6 rounded bg-zinc-800 text-center"
+            min="0"
+            max="99"
+            value={inputValue}
+            onChange={handleChangeValue}
+          />
+          <QtyButton
+            path={mdiPlus}
+            title="Add quantity"
+            onClick={() => changeQty(qty + 1)}
+          />
+        </div>
+        <button
+          className="flex-grow rounded bg-zinc-950 disabled:opacity-50"
+          type="button"
+          disabled={qty === 0}
+          onClick={buyItem}
+        >
+          BUY
+        </button>
+      </div>
     </div>
   );
 };
