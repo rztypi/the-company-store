@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: dark;
+  }
   html {
     font-family: "Poppins", system-ui, sans-serif;
+  }
+  body {
+    @apply bg-zinc-800 text-white
+  }
+  h1 {
+    @apply text-3xl font-bold;
   }
 }
