@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiGithub } from "@mdi/js";
 import Navigation from "./components/Navigation.jsx";
 
 const App = () => {
+  const [cartData, setCartData] = useState([]);
   return (
     <>
       <div className="relative flex min-h-screen gap-4 px-4 2xl:container 2xl:mx-auto">
@@ -11,7 +13,7 @@ const App = () => {
           <Navigation />
         </aside>
         <main className="flex-grow">
-          <Outlet />
+          <Outlet context={{ cartData, setCartData }} />
         </main>
       </div>
       <footer className="bg-zinc-900 py-2 text-center">

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
+import { useOutletContext } from "react-router-dom";
 import Icon from "@mdi/react";
-import { mdiPlus, mdiMinus, mdiSourceCommitStartNextLocal } from "@mdi/js";
+import { mdiPlus, mdiMinus } from "@mdi/js";
 import storeData from "../storeData.js";
 
 const QtyButton = ({ path, title, onClick }) => {
@@ -17,6 +18,8 @@ const QtyButton = ({ path, title, onClick }) => {
 };
 
 const Card = ({ item }) => {
+  const { cartData, setCartData } = useOutletContext();
+
   const [qty, setQty] = useState(0);
   const [inputValue, setInputValue] = useState("0");
 
@@ -42,14 +45,31 @@ const Card = ({ item }) => {
   const buyItem = () => {
     console.log(`buy ${qty} ${item.name}s`);
     changeQty(0);
+    if (cartData.some((cartItem) => cartItem.name === item.name)) {
+      setCartData(
+        cartData.map((cartItem) => {
+          if (cartItem.name === item.name) {
+            cartItem.qty += qty;
+          }
+          return cartItem;
+        }),
+      );
+    } else {
+      setCartData(
+        cartData.concat({
+          name: item.name,
+          qty,
+        }),
+      );
+    }
   };
 
   return (
-    <div className="aspect-2/3 sm:aspect-3/4 lg:aspect-4/5 flex w-40 flex-col rounded bg-zinc-900 p-2 shadow-md sm:w-48 lg:w-64 lg:p-4">
+    <div className="flex aspect-2/3 w-40 flex-col rounded bg-zinc-900 p-2 shadow-md sm:aspect-3/4 sm:w-48 lg:aspect-4/5 lg:w-64 lg:p-4">
       <div>
         <img src={item.src} alt={item.name} className="mx-auto mb-2 w-3/4" />
         <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
-        <p className="scrollbar-thin line-clamp-2 overflow-y-auto text-sm text-neutral-300">
+        <p className="line-clamp-2 overflow-y-auto text-sm text-neutral-300 scrollbar-thin">
           {item.desc}
         </p>
       </div>

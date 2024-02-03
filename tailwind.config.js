@@ -8,6 +8,9 @@ export default {
         "3/4": "3 / 4",
         "2/3": "2 / 3",
       },
+      maxWidth: {
+        128: "32rem",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")],

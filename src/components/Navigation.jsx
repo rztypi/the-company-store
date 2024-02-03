@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Icon from "@mdi/react";
-import { mdiHome, mdiStore } from "@mdi/js";
+import { mdiHome, mdiStore, mdiCart } from "@mdi/js";
 
 const NavLinkIcon = ({ to, path, title }) => {
   return (
@@ -15,6 +15,7 @@ const Navigation = () => {
     <nav className="sticky top-4 my-4 flex flex-col items-start gap-2">
       <NavLinkIcon to="/" path={mdiHome} title="Home" />
       <NavLinkIcon to="store" path={mdiStore} title="Store" />
+      <NavLinkIcon to="cart" path={mdiCart} title="Cart" />
     </nav>
   );
 };
