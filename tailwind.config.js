@@ -5,8 +5,10 @@ export default {
     extend: {
       aspectRatio: {
         "4/5": "4 / 5",
+        "3/4": "3 / 4",
+        "2/3": "2 / 3",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
