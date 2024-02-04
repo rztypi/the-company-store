@@ -7,21 +7,24 @@ import Navigation from "./components/Navigation.jsx";
 const App = () => {
   const [cartData, setCartData] = useState([]);
   return (
-    <>
-      <div className="relative flex min-h-screen gap-4 px-4 2xl:container 2xl:mx-auto">
+    <div className="flex min-h-screen flex-col px-4 2xl:container 2xl:mx-auto">
+      <div className="relative flex flex-grow gap-4">
         <aside>
-          <Navigation />
+          <Navigation cartData={cartData} />
         </aside>
         <main className="flex-grow">
           <Outlet context={{ cartData, setCartData }} />
         </main>
       </div>
-      <footer className="bg-zinc-900 py-2 text-center">
-        <a href="https://github.com/rztypi" className="text-sm">
-          <Icon path={mdiGithub} size={1} className="inline-block" /> rztypi
+      <footer className="flex justify-end py-2">
+        <a
+          href="https://github.com/rztypi"
+          className="flex items-center gap-1 text-xs opacity-75 transition-opacity hover:opacity-100 focus:opacity-100"
+        >
+          <Icon path={mdiGithub} className="w-5" /> rztypi
         </a>
       </footer>
-    </>
+    </div>
   );
 };
 

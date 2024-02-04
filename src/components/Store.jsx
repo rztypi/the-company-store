@@ -58,11 +58,11 @@ const StoreItem = ({ item }) => {
       <div>
         <div className="relative mb-2">
           <img src={item.src} alt={item.name} className="mx-auto w-3/4" />
-          <div className="absolute bottom-0 right-0 rounded bg-zinc-700 px-2 font-bold">
-            ▮ {item.price}
+          <div className="absolute bottom-0 right-0 rounded bg-zinc-700 px-2 font-medium">
+            ▮{item.price}
           </div>
         </div>
-        <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
+        <h2 className="text-lg font-medium text-green-500">{item.name}</h2>
         <p className="line-clamp-2 overflow-y-auto text-sm text-neutral-300 scrollbar-thin">
           {item.desc}
         </p>
@@ -88,7 +88,7 @@ const StoreItem = ({ item }) => {
           </BoxButton>
         </div>
         <button
-          className="flex-grow rounded bg-zinc-950 disabled:opacity-50"
+          className="flex-grow rounded bg-zinc-950 font-medium disabled:opacity-50"
           type="button"
           disabled={qty === 0}
           onClick={buyItem}
@@ -112,7 +112,7 @@ StoreItem.propTypes = {
 const Store = () => {
   return (
     <div className="py-4 text-center">
-      <h1 className="mb-4">Store</h1>
+      <h1 className="mb-4">STORE</h1>
       <div className="flex flex-wrap justify-center gap-4">
         {storeData.map((storeItem) => (
           <StoreItem key={storeItem.name} item={storeItem} />

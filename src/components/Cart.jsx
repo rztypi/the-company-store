@@ -41,8 +41,8 @@ const CartItem = ({ cartItem }) => {
       >
         <Icon path={mdiClose} size={1} />
       </button>
-      <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
-      <p className="text-xs">▮ {item.price}</p>
+      <h2 className="text-lg font-medium text-green-500">{item.name}</h2>
+      <p className="text-xs">▮{item.price}</p>
       <div className="mt-2 flex justify-between">
         <div className="flex items-center gap-1 text-sm lg:text-base">
           <BoxButton
@@ -56,7 +56,7 @@ const CartItem = ({ cartItem }) => {
             <Icon path={mdiPlus} size={0.9} />
           </BoxButton>
         </div>
-        <p className="font-bold">▮ {totalPrice}</p>
+        <p className="font-medium">▮{totalPrice}</p>
       </div>
     </div>
   );
@@ -82,7 +82,7 @@ const Cart = () => {
 
   return (
     <div className="py-4">
-      <h1 className="text-center">Cart</h1>
+      <h1 className="text-center">CART</h1>
       <div className="mx-auto mt-4 flex w-full max-w-128 flex-col rounded bg-zinc-900 p-4 shadow">
         {cartData.length > 0 ? (
           <>
@@ -96,13 +96,21 @@ const Cart = () => {
             ))}
             <hr className="my-4 border-t-2 border-dashed border-zinc-500" />
             <p className="text-right text-lg">
-              Total: ▮ <span className="font-bold">{totalPrice}</span>
+              Total: ▮<span className="font-medium">{totalPrice}</span>
             </p>
           </>
         ) : (
           <p className="text-center opacity-50">No items in cart.</p>
         )}
       </div>
+      {cartData.length > 0 && (
+        <button
+          type="button"
+          className="sticky bottom-4 mx-auto mt-4 block rounded bg-red-600 px-6 py-2 font-medium shadow-md"
+        >
+          Checkout (▮{totalPrice})
+        </button>
+      )}
     </div>
   );
 };

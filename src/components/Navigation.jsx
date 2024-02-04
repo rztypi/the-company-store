@@ -1,12 +1,18 @@
 import PropTypes from "prop-types";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiHome, mdiStore, mdiCart } from "@mdi/js";
 
 const NavLinkIcon = ({ to, path, title }) => {
   return (
-    <Link to={to} className="rounded-full bg-zinc-900 p-2 shadow-md">
-      <Icon path={path} title={title} size={1} />
+    <Link
+      to={to}
+      className="group relative flex items-center rounded-full bg-zinc-900 p-2 focus:outline-none focus-visible:ring focus-visible:ring-green-500"
+    >
+      <Icon path={path} title={`${title} icon`} className="w-6 lg:w-8" />
+      <span className="absolute left-14 hidden w-max text-left group-hover:inline-flex group-focus-visible:inline-flex lg:left-16">
+        {title}
+      </span>
     </Link>
   );
 };
@@ -17,14 +23,38 @@ NavLinkIcon.propTypes = {
   title: PropTypes.string,
 };
 
-const Navigation = () => {
+const CartNavLinkIcon = ({ cartData }) => {
+  const title = cartData.length > 0 ? `Cart (${cartData.length})` : "Cart";
+
+  return (
+    <div className="relative">
+      <NavLinkIcon to="cart" path={mdiCart} title={title} />
+      {cartData.length > 0 && (
+        <span className="absolute right-0 top-0 flex h-3 w-3">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75"></span>
+          <span className="relative inline-flex h-3 w-3 rounded-full bg-red-600"></span>
+        </span>
+      )}
+    </div>
+  );
+};
+
+CartNavLinkIcon.propTypes = {
+  cartData: PropTypes.array,
+};
+
+const Navigation = ({ cartData }) => {
   return (
     <nav className="sticky top-4 my-4 flex flex-col items-start gap-2">
       <NavLinkIcon to="/" path={mdiHome} title="Home" />
       <NavLinkIcon to="store" path={mdiStore} title="Store" />
-      <NavLinkIcon to="cart" path={mdiCart} title="Cart" />
+      <CartNavLinkIcon cartData={cartData} />
     </nav>
   );
+};
+
+Navigation.propTypes = {
+  cartData: PropTypes.array,
 };
 
 export default Navigation;
