@@ -45,10 +45,10 @@ const Card = ({ item }) => {
   const buyItem = () => {
     console.log(`buy ${qty} ${item.name}s`);
     changeQty(0);
-    if (cartData.some((cartItem) => cartItem.name === item.name)) {
+    if (cartData.some((cartItem) => cartItem.item.name === item.name)) {
       setCartData(
         cartData.map((cartItem) => {
-          if (cartItem.name === item.name) {
+          if (cartItem.item.name === item.name) {
             cartItem.qty += qty;
           }
           return cartItem;
@@ -57,7 +57,7 @@ const Card = ({ item }) => {
     } else {
       setCartData(
         cartData.concat({
-          name: item.name,
+          item,
           qty,
         }),
       );
