@@ -45,22 +45,26 @@ const Cart = () => {
   return (
     <div className="py-4">
       <h1 className="text-center">Cart</h1>
-      {cartData.length > 0 && (
-        <div className="mx-auto mt-4 flex w-full max-w-128 flex-col rounded bg-zinc-900 p-4 shadow">
-          {Object.entries(cartData).map(([index, cartItem]) => (
-            <Fragment key={cartItem.item.name}>
-              <CartItem cartItem={cartItem} />
-              {index < cartData.length - 1 && (
-                <hr className="border-zinc-500" />
-              )}
-            </Fragment>
-          ))}
-          <hr className="border-t-2 border-dashed border-zinc-500" />
-          <p className="mt-4 text-right text-lg">
-            Total: ▮ <span className="font-bold">{totalPrice}</span>
-          </p>
-        </div>
-      )}
+      <div className="mx-auto mt-4 flex w-full max-w-128 flex-col rounded bg-zinc-900 p-4 shadow">
+        {cartData.length > 0 ? (
+          <>
+            {Object.entries(cartData).map(([index, cartItem]) => (
+              <Fragment key={cartItem.item.name}>
+                <CartItem cartItem={cartItem} />
+                {index < cartData.length - 1 && (
+                  <hr className="border-zinc-500" />
+                )}
+              </Fragment>
+            ))}
+            <hr className="border-t-2 border-dashed border-zinc-500" />
+            <p className="mt-4 text-right text-lg">
+              Total: ▮ <span className="font-bold">{totalPrice}</span>
+            </p>
+          </>
+        ) : (
+          <p className="text-center opacity-50">No items in cart.</p>
+        )}
+      </div>
     </div>
   );
 };
