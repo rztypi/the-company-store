@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import Icon from "@mdi/react";
 import { mdiClose, mdiMinus, mdiPlus } from "@mdi/js";
 import { useOutletContext } from "react-router-dom";
 import { Fragment } from "react";
-import QtyButton from "./QtyButton.jsx";
+import BoxButton from "./BoxButton.jsx";
 
 const CartItem = ({ cartItem }) => {
   const { cartData, setCartData } = useOutletContext();
@@ -44,22 +45,31 @@ const CartItem = ({ cartItem }) => {
       <p className="text-xs">▮ {item.price}</p>
       <div className="mt-2 flex justify-between">
         <div className="flex items-center gap-1 text-sm lg:text-base">
-          <QtyButton
-            path={mdiMinus}
+          <BoxButton
             title="Subtract quantity"
             onClick={() => changeQty(qty - 1)}
-          />
+          >
+            <Icon path={mdiMinus} size={0.9} />
+          </BoxButton>
           <span className="min-w-6 px-1 text-center">{qty}</span>
-          <QtyButton
-            path={mdiPlus}
-            title="Add quantity"
-            onClick={() => changeQty(qty + 1)}
-          />
+          <BoxButton title="Add quantity" onClick={() => changeQty(qty + 1)}>
+            <Icon path={mdiPlus} size={0.9} />
+          </BoxButton>
         </div>
         <p className="font-bold">▮ {totalPrice}</p>
       </div>
     </div>
   );
+};
+
+CartItem.propTypes = {
+  cartItem: PropTypes.shape({
+    item: PropTypes.shape({
+      name: PropTypes.string,
+      price: PropTypes.number,
+    }),
+    qty: PropTypes.number,
+  }),
 };
 
 const Cart = () => {

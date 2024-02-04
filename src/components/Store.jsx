@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
+import PropTypes from "prop-types";
 import { useOutletContext } from "react-router-dom";
+import Icon from "@mdi/react";
 import { mdiPlus, mdiMinus } from "@mdi/js";
-import QtyButton from "./QtyButton.jsx";
+import BoxButton from "./BoxButton.jsx";
 import storeData from "../storeData.js";
 
-const Card = ({ item }) => {
+const StoreItem = ({ item }) => {
   const { cartData, setCartData } = useOutletContext();
 
   const [qty, setQty] = useState(0);
@@ -67,11 +69,12 @@ const Card = ({ item }) => {
       </div>
       <div className="mt-auto flex justify-between gap-2 text-sm lg:text-base">
         <div className="flex items-center gap-1">
-          <QtyButton
-            path={mdiMinus}
+          <BoxButton
             title="Subtract quantity"
             onClick={() => changeQty(qty - 1)}
-          />
+          >
+            <Icon path={mdiMinus} size={0.9} />
+          </BoxButton>
           <input
             type="number"
             className="w-6 rounded bg-zinc-800 text-center"
@@ -80,11 +83,9 @@ const Card = ({ item }) => {
             value={inputValue}
             onChange={handleChangeValue}
           />
-          <QtyButton
-            path={mdiPlus}
-            title="Add quantity"
-            onClick={() => changeQty(qty + 1)}
-          />
+          <BoxButton title="Add quantity" onClick={() => changeQty(qty + 1)}>
+            <Icon path={mdiPlus} size={0.9} />
+          </BoxButton>
         </div>
         <button
           className="flex-grow rounded bg-zinc-950 disabled:opacity-50"
@@ -99,13 +100,22 @@ const Card = ({ item }) => {
   );
 };
 
+StoreItem.propTypes = {
+  item: PropTypes.shape({
+    name: PropTypes.string,
+    src: PropTypes.string,
+    desc: PropTypes.string,
+    price: PropTypes.number,
+  }),
+};
+
 const Store = () => {
   return (
     <div className="py-4 text-center">
       <h1 className="mb-4">Store</h1>
       <div className="flex flex-wrap justify-center gap-4">
-        {storeData.map((item) => (
-          <Card key={item.name} item={item} />
+        {storeData.map((storeItem) => (
+          <StoreItem key={storeItem.name} item={storeItem} />
         ))}
       </div>
     </div>

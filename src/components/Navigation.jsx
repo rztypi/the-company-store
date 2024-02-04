@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Link, NavLink } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiHome, mdiStore, mdiCart } from "@mdi/js";
 
@@ -8,6 +9,12 @@ const NavLinkIcon = ({ to, path, title }) => {
       <Icon path={path} title={title} size={1} />
     </Link>
   );
+};
+
+NavLinkIcon.propTypes = {
+  to: PropTypes.string,
+  path: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const Navigation = () => {
