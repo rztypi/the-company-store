@@ -8,21 +8,25 @@ const storeData = [
     name: "Flashlight",
     src: FlashlightIcon,
     desc: "A flashlight.",
+    price: 25,
   },
   {
     name: "Jetpack",
     src: JetpackIcon,
     desc: "A jetpack.",
+    price: 700,
   },
   {
     name: "Shovel",
     src: ShovelIcon,
     desc: "A shovel.",
+    price: 30,
   },
   {
     name: "Walkie-talkie",
     src: WalkieTalkieIcon,
     desc: "A walkie-talkie.",
+    price: 12,
   },
 ];
 

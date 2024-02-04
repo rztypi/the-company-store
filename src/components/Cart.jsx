@@ -2,30 +2,32 @@ import Icon from "@mdi/react";
 import { mdiClose } from "@mdi/js";
 import { useOutletContext } from "react-router-dom";
 import { Fragment } from "react";
+import storeData from "../storeData.js";
 
 const CartItem = ({ item }) => {
   const { cartData, setCartData } = useOutletContext();
+
+  const storeItem = storeData.find((obj) => obj.name === item.name);
+  const totalPrice = storeItem.price * item.qty;
 
   const removeCartItem = () => {
     setCartData(cartData.filter((cartItem) => cartItem.name !== item.name));
   };
 
   return (
-    <div className="py-4">
-      <div>
-        <div>
-          <h2 className="inline-block text-lg font-bold text-green-500">
-            {item.name}
-          </h2>
-          <button
-            className="float-right"
-            type="button"
-            onClick={removeCartItem}
-          >
-            <Icon path={mdiClose} size={1} />
-          </button>
-        </div>
+    <div className="relative py-4">
+      <button
+        className="absolute right-0 opacity-75"
+        type="button"
+        onClick={removeCartItem}
+      >
+        <Icon path={mdiClose} size={1} />
+      </button>
+      <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
+      <p className="text-xs">▮ {storeItem.price}</p>
+      <div className="*:inline-block">
         <p>x{item.qty}</p>
+        <p className="float-right font-bold">▮ {totalPrice}</p>
       </div>
     </div>
   );
@@ -33,6 +35,15 @@ const CartItem = ({ item }) => {
 
 const Cart = () => {
   const { cartData } = useOutletContext();
+
+  const totalPrice = cartData.reduce(
+    (prev, cartItem) =>
+      storeData.find((storeItem) => storeItem.name === cartItem.name).price *
+        cartItem.qty +
+      prev,
+    0,
+  );
+
   return (
     <div className="py-4">
       <h1 className="text-center">Cart</h1>
@@ -47,7 +58,9 @@ const Cart = () => {
             </Fragment>
           ))}
           <hr className="border-t-2 border-dashed border-zinc-500" />
-          <p className="mt-4 text-right">Total:</p>
+          <p className="mt-4 text-right text-lg">
+            Total: ▮ <span className="font-bold">{totalPrice}</span>
+          </p>
         </div>
       )}
     </div>
