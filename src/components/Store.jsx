@@ -1,21 +1,8 @@
 import { useState, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
-import Icon from "@mdi/react";
 import { mdiPlus, mdiMinus } from "@mdi/js";
+import QtyButton from "./QtyButton.jsx";
 import storeData from "../storeData.js";
-
-const QtyButton = ({ path, title, onClick }) => {
-  return (
-    <button
-      type="button"
-      className="flex h-6 w-6 items-center justify-center rounded bg-zinc-950"
-      title={title}
-      onClick={onClick}
-    >
-      <Icon path={path} size={0.9} />
-    </button>
-  );
-};
 
 const Card = ({ item }) => {
   const { cartData, setCartData } = useOutletContext();

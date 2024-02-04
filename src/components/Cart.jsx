@@ -1,7 +1,8 @@
 import Icon from "@mdi/react";
-import { mdiClose } from "@mdi/js";
+import { mdiClose, mdiMinus, mdiPlus } from "@mdi/js";
 import { useOutletContext } from "react-router-dom";
 import { Fragment } from "react";
+import QtyButton from "./QtyButton.jsx";
 
 const CartItem = ({ cartItem }) => {
   const { cartData, setCartData } = useOutletContext();
@@ -15,8 +16,23 @@ const CartItem = ({ cartItem }) => {
     );
   };
 
+  const changeQty = (newQty) => {
+    if (newQty === 0) {
+      removeCartItem();
+      return;
+    }
+    setCartData(
+      cartData.map((cartItem) => {
+        if (cartItem.item.name === item.name) {
+          return { ...cartItem, qty: newQty };
+        }
+        return cartItem;
+      }),
+    );
+  };
+
   return (
-    <div className="relative py-4">
+    <div className="relative">
       <button
         className="absolute right-0 opacity-75"
         type="button"
@@ -26,9 +42,21 @@ const CartItem = ({ cartItem }) => {
       </button>
       <h2 className="text-lg font-bold text-green-500">{item.name}</h2>
       <p className="text-xs">▮ {item.price}</p>
-      <div className="*:inline-block">
-        <p>x{qty}</p>
-        <p className="float-right font-bold">▮ {totalPrice}</p>
+      <div className="mt-2 flex justify-between">
+        <div className="flex items-center gap-1 text-sm lg:text-base">
+          <QtyButton
+            path={mdiMinus}
+            title="Subtract quantity"
+            onClick={() => changeQty(qty - 1)}
+          />
+          <span className="min-w-6 px-1 text-center">{qty}</span>
+          <QtyButton
+            path={mdiPlus}
+            title="Add quantity"
+            onClick={() => changeQty(qty + 1)}
+          />
+        </div>
+        <p className="font-bold">▮ {totalPrice}</p>
       </div>
     </div>
   );
@@ -52,12 +80,12 @@ const Cart = () => {
               <Fragment key={cartItem.item.name}>
                 <CartItem cartItem={cartItem} />
                 {index < cartData.length - 1 && (
-                  <hr className="border-zinc-500" />
+                  <hr className="my-4 border-zinc-500" />
                 )}
               </Fragment>
             ))}
-            <hr className="border-t-2 border-dashed border-zinc-500" />
-            <p className="mt-4 text-right text-lg">
+            <hr className="my-4 border-t-2 border-dashed border-zinc-500" />
+            <p className="text-right text-lg">
               Total: ▮ <span className="font-bold">{totalPrice}</span>
             </p>
           </>
