@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useLoaderData, Navigate, useOutletContext } from "react-router-dom";
-import Icon from "@mdi/react";
-import { mdiMinus, mdiPlus } from "@mdi/js";
-import BoxButton from "./BoxButton.jsx";
+import QtyInput from "./QtyInput.jsx";
+import AddToCartButton from "./AddToCartButton.jsx";
 import { getStoreItem } from "../storeData.js";
 
 export const loader = ({ params }) => {
@@ -10,58 +9,13 @@ export const loader = ({ params }) => {
 };
 
 const StoreItem = () => {
-  const { cartData, setCartData } = useOutletContext();
   const { item } = useLoaderData();
-
   const [qty, setQty] = useState(1);
-  const [inputValue, setInputValue] = useState("1");
-
-  const handleChangeValue = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-    if (value !== "" && value >= 0 && value <= 99) {
-      setQty(+value);
-    } else {
-      setQty(0);
-    }
-  };
-
-  const changeQty = (newQty) => {
-    if (newQty < 1 || newQty > 99) {
-      setInputValue(qty.toString());
-      return;
-    }
-    setQty(newQty);
-    setInputValue(newQty.toString());
-  };
-
-  const buyItem = () => {
-    console.log(`buy ${qty} ${item.name}s`);
-    changeQty(1);
-    if (cartData.some((cartItem) => cartItem.item.name === item.name)) {
-      setCartData(
-        cartData.map((cartItem) => {
-          if (cartItem.item.name === item.name) {
-            cartItem.qty += qty;
-          }
-          return cartItem;
-        }),
-      );
-    } else {
-      setCartData(
-        cartData.concat({
-          item,
-          qty,
-        }),
-      );
-    }
-  };
+  const { cartData, setCartData } = useOutletContext();
 
   if (!item) {
     return <Navigate to="/store" replace={true} />;
   }
-
-  const handleChangeQtyValue = (event) => {};
 
   return (
     <div className="flex h-full flex-col items-center justify-center p-4">
@@ -73,33 +27,16 @@ const StoreItem = () => {
           <div className="my-4 inline-block rounded bg-zinc-700 px-2 text-xl font-bold">
             ▮{item.price}
           </div>
-          <div className="flex items-center gap-1">
-            <span className="mr-1 text-sm">Qty:</span>
-            <BoxButton
-              title="Subtract quantity"
-              onClick={() => changeQty(qty - 1)}
-            >
-              <Icon path={mdiMinus} size={0.9} />
-            </BoxButton>
-            <input
-              type="number"
-              className="w-6 rounded bg-zinc-800 text-center"
-              min="1"
-              max="99"
-              value={inputValue}
-              onChange={handleChangeValue}
-            />
-            <BoxButton title="Add quantity" onClick={() => changeQty(qty + 1)}>
-              <Icon path={mdiPlus} size={0.9} />
-            </BoxButton>
+          <div className="flex items-center gap-2">
+            <span>Qty:</span>
+            <QtyInput qtyState={[qty, setQty]} />
           </div>
-          <button
+          <AddToCartButton
             className="mt-2 flex w-full justify-center rounded bg-zinc-950 py-1 text-lg font-medium"
-            type="button"
-            onClick={buyItem}
-          >
-            BUY
-          </button>
+            cartDataState={[cartData, setCartData]}
+            storeItem={item}
+            qty={qty}
+          />
         </div>
       </div>
     </div>
