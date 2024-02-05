@@ -2,6 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import Home from "./components/Home.jsx";
 import Store from "./components/Store.jsx";
+import StoreItem, {
+  loader as storeItemLoader,
+} from "./components/StoreItem.jsx";
 import Cart from "./components/Cart.jsx";
 import ErrorPage from "./components/ErrorPage.jsx";
 
@@ -11,8 +14,13 @@ const Router = () => {
       path: "/",
       element: <App />,
       children: [
-        { path: "", element: <Home /> },
+        { index: true, element: <Home /> },
         { path: "store", element: <Store /> },
+        {
+          path: "store/:id",
+          element: <StoreItem />,
+          loader: storeItemLoader,
+        },
         { path: "cart", element: <Cart /> },
       ],
       errorElement: <ErrorPage />,
