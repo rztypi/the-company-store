@@ -1,16 +1,18 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useOutletContext } from "react-router-dom";
+import Icon from "@mdi/react";
+import { mdiMagnify, mdiClose } from "@mdi/js";
 import QtyInput from "./QtyInput.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
-import { getStoreData } from "../storeData.js";
+import { getStoreData, getFilteredStoreData } from "../storeData.js";
 
 const ItemCard = ({ item }) => {
   const [qty, setQty] = useState(1);
   const { cartData, setCartData } = useOutletContext();
 
   return (
-    <div className="w-48 rounded bg-zinc-900 p-2 shadow-md md:w-64 md:p-4">
+    <div className="w-48 rounded bg-zinc-900 p-2 text-center shadow-md md:w-64 md:p-4">
       <Link className="group focus:outline-none" to={item.id}>
         <div className="relative mb-2">
           <img
@@ -53,14 +55,43 @@ ItemCard.propTypes = {
 };
 
 const Store = () => {
+  const [q, setQ] = useState("");
+
+  const storeData = q.length === 0 ? getStoreData() : getFilteredStoreData(q);
+
+  const handleChange = (event) => {
+    setQ(event.target.value);
+  };
+
   return (
-    <div className="py-4 text-center">
-      <h1 className="mb-4">STORE</h1>
-      <div className="flex flex-wrap justify-center gap-4">
-        {getStoreData().map((storeItem) => (
-          <ItemCard key={storeItem.id} item={storeItem} />
-        ))}
+    <div className="py-4">
+      <h1 className="mb-4 text-center">STORE</h1>
+      <div className="mb-4 flex w-full gap-2 rounded bg-zinc-900 px-2 py-1 shadow-inner focus-within:outline md:ml-auto md:w-2/5">
+        <span>
+          <Icon path={mdiMagnify} title="Search" size={1} />
+        </span>
+        <input
+          className="w-full bg-transparent text-green-500 placeholder-neutral-400 caret-green-500 focus:outline-none"
+          type="text"
+          placeholder="Search item"
+          onChange={handleChange}
+          value={q}
+        />
+        {q.length > 0 && (
+          <button type="button" onClick={() => setQ("")}>
+            <Icon path={mdiClose} title="Close" size={1} />
+          </button>
+        )}
       </div>
+      {storeData.length > 0 ? (
+        <div className="flex flex-wrap justify-center gap-4">
+          {storeData.map((storeItem) => (
+            <ItemCard key={storeItem.id} item={storeItem} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-neutral-300">No items found.</p>
+      )}
     </div>
   );
 };

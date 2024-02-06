@@ -110,8 +110,14 @@ const getStoreData = () => {
   return storeData;
 };
 
+const getFilteredStoreData = (q) => {
+  return storeData.filter((storeItem) =>
+    storeItem.name.toLowerCase().includes(q.toLowerCase()),
+  );
+};
+
 const getStoreItem = (id) => {
   return storeData.find((storeItem) => storeItem.id === id);
 };
 
-export { getStoreData, getStoreItem };
+export { getStoreData, getFilteredStoreData, getStoreItem };
