@@ -34,7 +34,11 @@ const QtySpinner = ({ qtyState, min = 1, max = 99 }) => {
   return (
     <div className="inline-flex items-center gap-1">
       <BoxButton title="Subtract quantity" onClick={() => handleClick(qty - 1)}>
-        <Icon path={mdiChevronLeft} size={1} />
+        <Icon
+          path={mdiChevronLeft}
+          size={1}
+          className="opacity-50 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-75"
+        />
       </BoxButton>
       <input
         type="number"
@@ -46,7 +50,11 @@ const QtySpinner = ({ qtyState, min = 1, max = 99 }) => {
         onChange={handleChangeValue}
       />
       <BoxButton title="Add quantity" onClick={() => handleClick(qty + 1)}>
-        <Icon path={mdiChevronRight} size={1} />
+        <Icon
+          path={mdiChevronRight}
+          size={1}
+          className="opacity-50 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 group-active:opacity-75"
+        />
       </BoxButton>
     </div>
   );

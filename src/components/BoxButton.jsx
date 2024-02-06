@@ -4,7 +4,7 @@ const BoxButton = ({ title, onClick, children }) => {
   return (
     <button
       type="button"
-      className="flex h-6 w-6 items-center justify-center rounded bg-zinc-950"
+      className="group flex h-6 w-6 items-center justify-center rounded bg-zinc-950"
       title={title}
       onClick={onClick}
     >
