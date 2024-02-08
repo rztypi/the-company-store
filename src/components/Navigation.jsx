@@ -10,7 +10,7 @@ const NavLinkIcon = ({ to, path, title }) => {
       className="group relative flex items-center rounded-full bg-zinc-900 p-2 focus:outline-none focus-visible:ring focus-visible:ring-green-500"
     >
       <Icon path={path} className="w-6 group-active:opacity-75 md:w-8" />
-      <span className="absolute left-14 hidden w-max text-left group-hover:inline-flex group-focus-visible:inline-flex md:left-16">
+      <span className="absolute left-14 hidden w-max rounded bg-zinc-950 px-2 text-left shadow group-hover:inline-flex group-focus-visible:inline-flex md:left-16">
         {title}
       </span>
     </Link>
