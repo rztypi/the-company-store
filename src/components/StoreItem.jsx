@@ -1,22 +1,14 @@
 import { useState } from "react";
-import {
-  useLoaderData,
-  useOutletContext,
-  Navigate,
-  Link,
-} from "react-router-dom";
+import { useParams, useOutletContext, Navigate, Link } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiArrowLeft } from "@mdi/js";
 import QtyInput from "./QtyInput.jsx";
 import AddToCartButton from "./AddToCartButton.jsx";
 import { getStoreItem } from "../storeData.js";
 
-export const loader = ({ params }) => {
-  return { item: getStoreItem(params.id) };
-};
-
 const StoreItem = () => {
-  const { item } = useLoaderData();
+  const { id } = useParams();
+  const item = getStoreItem(id);
   const [qty, setQty] = useState(1);
   const { cartData, setCartData } = useOutletContext();
 

@@ -36,6 +36,7 @@ const CartItem = ({ cartItem }) => {
         className="absolute right-0 opacity-50 transition-opacity hover:opacity-75 focus-visible:opacity-100 active:opacity-100"
         type="button"
         onClick={removeCartItem}
+        aria-label="Delete cart item"
       >
         <Icon path={mdiDelete} size={1} />
       </button>

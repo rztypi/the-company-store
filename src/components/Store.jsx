@@ -13,13 +13,15 @@ const ItemCard = ({ item }) => {
 
   return (
     <div className="w-48 rounded bg-zinc-900 p-2 text-center shadow-md md:w-64 md:p-4">
-      <Link className="group focus:outline-none" to={item.id}>
+      <div className="group focus:outline-none">
         <div className="relative mb-2">
-          <img
-            src={item.src}
-            alt={item.name}
-            className="mx-auto w-5/6 transition-transform group-hover:scale-105 group-focus-visible:scale-105"
-          />
+          <Link to={item.id}>
+            <img
+              src={item.src}
+              alt={item.name}
+              className="mx-auto w-5/6 transition-transform group-hover:scale-105 group-focus-visible:scale-105"
+            />
+          </Link>
           <div className="absolute bottom-0 right-0 rounded bg-zinc-700 px-2">
             ▮{item.price}
           </div>
@@ -27,7 +29,7 @@ const ItemCard = ({ item }) => {
         <h2 className="inline-block rounded text-xl font-medium text-green-500 group-focus-visible:ring group-focus-visible:ring-green-500">
           {item.name}
         </h2>
-      </Link>
+      </div>
       <div className="mt-4 flex flex-col items-center gap-2 md:flex-row">
         <QtyInput qtyState={[qty, setQty]} />
         <AddToCartButton
@@ -76,10 +78,11 @@ const Store = () => {
           placeholder="Search item"
           onChange={handleChange}
           value={q}
+          aria-label="Search item"
         />
         {q.length > 0 && (
           <button type="button" onClick={() => setQ("")}>
-            <Icon path={mdiClose} title="Close" size={1} />
+            <Icon path={mdiClose} title="Clear" size={1} />
           </button>
         )}
       </div>
