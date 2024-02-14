@@ -18,6 +18,7 @@ A mockup of an e-commerce website featuring items from the award-winning co-op h
 - Item data from [Lethal Company](https://lethal-company.fandom.com/wiki/Store)
 - Icons from [Material Design Icons](https://pictogrammers.com/library/mdi/)
 - Font from [Google Fonts](https://fonts.google.com/specimen/Poppins?query=poppins)
+- Favicon from [SteamGridDB](https://www.steamgriddb.com/icon/48097)
 
 ## Notes
 
